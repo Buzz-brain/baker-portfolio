@@ -21,20 +21,34 @@ const Contact: React.FC = () => {
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+  
+    // Basic validation
+    if (!formState.name || !formState.email || !formState.subject || !formState.message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+  
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formState.email)) {
+      alert("Invalid email address.");
+      return;
+    }
+  
     setIsSubmitting(true);
-    
+  
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormState({ name: '', email: '', subject: '', message: '' });
-      
+  
       // Reset success message after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
       }, 5000);
     }, 1500);
-  };
+  };  
 
   return (
     <section id="contact" className="py-20 bg-white">
